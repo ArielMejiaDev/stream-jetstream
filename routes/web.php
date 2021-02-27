@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Team\UpdateTeamAddressController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,7 +30,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/welcome', function () {
-
     return Inertia::render('WelcomeOwner');
-
 })->name('welcome.owner');
+
+Route::put('/team/{team}/address', UpdateTeamAddressController::class)->name('team.address.update');
