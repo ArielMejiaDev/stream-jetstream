@@ -9,7 +9,12 @@ use App\Actions\Jetstream\DeleteUser;
 use App\Actions\Jetstream\InviteTeamMember;
 use App\Actions\Jetstream\RemoveTeamMember;
 use App\Actions\Jetstream\UpdateTeamName;
+use App\Http\Responses\LoginResponse;
+use App\Http\Responses\RegisterResponse;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Fortify\Http\Responses\LoginResponse as FortifyLoginResponse;
+use Laravel\Fortify\Http\Responses\RegisterResponse as FortifyRegisterResponse;
+use Laravel\Fortify\Http\Responses\TwoFactorLoginResponse as FortityTwoFactorLoginResponse;
 use Laravel\Jetstream\Jetstream;
 
 class JetstreamServiceProvider extends ServiceProvider
@@ -40,6 +45,11 @@ class JetstreamServiceProvider extends ServiceProvider
         Jetstream::removeTeamMembersUsing(RemoveTeamMember::class);
         Jetstream::deleteTeamsUsing(DeleteTeam::class);
         Jetstream::deleteUsersUsing(DeleteUser::class);
+
+        $this->app->singleton(FortifyLoginResponse::class, LoginResponse::class);
+        $this->app->singleton(FortityTwoFactorLoginResponse::class, LoginResponse::class);
+
+        $this->app->singleton(FortifyRegisterResponse::class, RegisterResponse::class);
     }
 
     /**
